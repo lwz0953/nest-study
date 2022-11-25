@@ -9,5 +9,5 @@ export class User {
     name: string
 
     @Column({ nullable: true })
-    age: number
+    age!: number
 }

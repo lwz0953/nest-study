@@ -45,6 +45,7 @@ module.exports = {
         'no-unused-vars': 0,
         'no-multi-assign': 0,
         'no-param-reassign': [2, { props: false }],
+        'no-useless-constructor': 0,
         'import/prefer-default-export': 0,
         'import/no-cycle': 0,
         'import/no-dynamic-require': 0,

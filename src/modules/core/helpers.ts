@@ -5,24 +5,21 @@
  * @param {(string | number)} [value]
  * @returns {*}  {(number | undefined)}
  */
-import {
-  IPaginationMeta,
-  ObjectLiteral,
-  Pagination,
-} from 'nestjs-typeorm-paginate';
-import { PaginateDto } from './types';
+import { IPaginationMeta, ObjectLiteral, Pagination } from 'nestjs-typeorm-paginate'
+
+import { PaginateDto } from './types'
 
 export function tNumber(value?: string | number): string | number | undefined {
-  if (typeof value === 'number') return value;
-  if (typeof value === 'string') {
-    try {
-      return Number(value);
-    } catch (error) {
-      return value;
+    if (typeof value === 'number') return value
+    if (typeof value === 'string') {
+        try {
+            return Number(value)
+        } catch (error) {
+            return value
+        }
     }
-  }
 
-  return value;
+    return value
 }
 
 /**
@@ -32,18 +29,16 @@ export function tNumber(value?: string | number): string | number | undefined {
  * @param {(string | boolean)} [value]
  * @return {*}
  */
-export function tBoolean(
-  value?: string | boolean,
-): string | boolean | undefined {
-  if (typeof value === 'boolean') return value;
-  if (typeof value === 'string') {
-    try {
-      return JSON.parse(value.toLowerCase());
-    } catch (error) {
-      return value;
+export function tBoolean(value?: string | boolean): string | boolean | undefined {
+    if (typeof value === 'boolean') return value
+    if (typeof value === 'string') {
+        try {
+            return JSON.parse(value.toLowerCase())
+        } catch (error) {
+            return value
+        }
     }
-  }
-  return value;
+    return value
 }
 
 /**
@@ -53,7 +48,7 @@ export function tBoolean(
  * @returns {*}  {(string | null | undefined)}
  */
 export function tNull(value?: string | null): string | null | undefined {
-  return value === 'null' ? null : value;
+    return value === 'null' ? null : value
 }
 
 /**
@@ -65,33 +60,26 @@ export function tNull(value?: string | null): string | null | undefined {
  * @param {T[]} data
  * @return {*}  {Pagination<T>}
  */
-export function manualPaginate<T extends ObjectLiteral>(
-  { page, limit }: PaginateDto,
-  data: T[],
-): Pagination<T> {
-  let items: T[] = [];
-  const totalItems = data.length;
-  const totalRst = totalItems / limit;
-  const totalPages =
-    totalRst > Math.floor(totalRst)
-      ? Math.floor(totalRst) + 1
-      : Math.floor(totalRst);
-  let itemCount = 0;
-  if (page <= totalPages) {
-    itemCount =
-      page === totalPages ? totalItems - (totalPages - 1) * limit : limit;
-    const start = (page - 1) * limit;
-    items = data.slice(start, start + itemCount);
-  }
-  const meta: IPaginationMeta = {
-    itemCount,
-    totalItems,
-    itemsPerPage: limit,
-    totalPages,
-    currentPage: page,
-  };
-  return {
-    meta,
-    items,
-  };
+export function manualPaginate<T extends ObjectLiteral>({ page, limit }: PaginateDto, data: T[]): Pagination<T> {
+    let items: T[] = []
+    const totalItems = data.length
+    const totalRst = totalItems / limit
+    const totalPages = totalRst > Math.floor(totalRst) ? Math.floor(totalRst) + 1 : Math.floor(totalRst)
+    let itemCount = 0
+    if (page <= totalPages) {
+        itemCount = page === totalPages ? totalItems - (totalPages - 1) * limit : limit
+        const start = (page - 1) * limit
+        items = data.slice(start, start + itemCount)
+    }
+    const meta: IPaginationMeta = {
+        itemCount,
+        totalItems,
+        itemsPerPage: limit,
+        totalPages,
+        currentPage: page
+    }
+    return {
+        meta,
+        items
+    }
 }

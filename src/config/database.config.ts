@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 
-import { User } from '@/modules/content/test-typeorm/user.entity'
+import { User } from '../modules/content/test-typeorm/user.entity'
 
 export const database: () => TypeOrmModuleOptions = () => ({
     type: 'mysql',
